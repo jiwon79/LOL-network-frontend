@@ -69,6 +69,22 @@ function draw() {
     });
 }
 
+// updated 2019
+const input = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
+
+const expand = () => {
+  searchBtn.classList.toggle("close");
+  input.classList.toggle("square");
+};
+
+searchBtn.addEventListener("click", expand);
+
+
+
+
+
+
 function remake() {
   network = new vis.Network(container, data, options);
 }
@@ -87,51 +103,71 @@ function contactForm() {
       });
   });
 }
+
+const queryString = window.location.search;
+
+const urlParams = new URLSearchParams(queryString);
+
+const userName = urlParams.get('input')
+
+
 window.addEventListener("load", () => {
-  contactForm()
-  draw();
-  setTimeout(function () {
+  if(userName!=null){
 
-    edges.push({
-      from: "new",
-      value: 10,
-      to: "꿀벌지민"
-    })
-    edges.push({
-      from: "new",
-      value: 20,
-      to: "마리마리착마리"
-    })
+    document.getElementById('search-content').style.visibility = "hidden";
+    document.getElementById('mynetwork').style.visibility = "visible";
+    document.getElementById('contact-form').style.visibility = "visible";
+    document.getElementById('remake').style.visibility = "visible";
 
+    contactForm()
+    draw();
 
-    edges.push({
-      from: "new2",
-      value: 10,
-      to: "new"
-    })
-    edges.push({
-      from: "new2",
-      value: 20,
-      to: "마리마리착마리"
-    })
-
-    edges.push({
-      from: "new2",
-      value: 30,
-      to: "리듬타지마"
-    })
-
-    nodes.push({
-      label: 'new',
-      id: 'new',
-    })
-    nodes.push({
-      label: 'new2',
-      id: 'new2',
-    })
-    visedges.update(edges)
-    visnodes.update(nodes)
-    // netwk.selectNodes([updatedIds[0]]);
-    // netwk.editNode();
-  }, 8000)
+  }
+  else{
+    document.getElementById('search-content').style.visibility = "visible";
+    document.getElementById('mynetwork').style.visibility = "hidden";
+    document.getElementById('contact-form').style.visibility = "hidden";
+    document.getElementById('remake').style.visibility = "hidden";
+  }
 });
+
+// edge and node push
+  // edges.push({
+  //   from: "new",
+  //   value: 10,
+  //   to: "꿀벌지민"
+  // })
+  // edges.push({
+  //   from: "new",
+  //   value: 20,
+  //   to: "마리마리착마리"
+  // })
+
+
+  // edges.push({
+  //   from: "new2",
+  //   value: 10,
+  //   to: "new"
+  // })
+  // edges.push({
+  //   from: "new2",
+  //   value: 20,
+  //   to: "마리마리착마리"
+  // })
+
+  // edges.push({
+  //   from: "new2",
+  //   value: 30,
+  //   to: "리듬타지마"
+  // })
+
+  // nodes.push({
+  //   label: 'new',
+  //   id: 'new',
+  // })
+  // nodes.push({
+  //   label: 'new2',
+  //   id: 'new2',
+  // })
+  // visedges.update(edges)
+  // visnodes.update(nodes)
