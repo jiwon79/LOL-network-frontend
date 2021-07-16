@@ -94,13 +94,13 @@ function contactForm() {
     // generate a five digit number for the contact_number variable
     this.contact_number.value = Math.random() * 100000 | 0;
     // these IDs from the previous steps
-    document.getElementById('name').value = "";
-    document.getElementById('email').value = "";
-    document.getElementById('message').value = "";
 
     emailjs.sendForm('service_0gal12i', 'template_wqvlu05', this)
       .then(function () {
         console.log('SUCCESS!');
+        document.getElementById('name').value = "";
+        document.getElementById('email').value = "";
+        document.getElementById('message').value = "";
 
       }, function (error) {
         console.log('FAILED...', error);
