@@ -63,6 +63,7 @@ function draw() {
       };
       console.log(edges)
       network = new vis.Network(container, data, options);
+      document.getElementById('loading').style.visibility = "hidden";
 
 
 
@@ -122,6 +123,7 @@ window.addEventListener("load", () => {
     document.getElementById('mynetwork').style.visibility = "visible";
     document.getElementById('contact-form').style.visibility = "visible";
     document.getElementById('remake').style.visibility = "visible";
+    document.getElementById('loading').style.visibility = "visible";
 
     contactForm()
     draw();
@@ -129,6 +131,7 @@ window.addEventListener("load", () => {
   }
   else{
     document.getElementById('search-content').style.visibility = "visible";
+    document.getElementById('loading').style.visibility = "hidden";
     document.getElementById('mynetwork').style.visibility = "hidden";
     document.getElementById('contact-form').style.visibility = "hidden";
     document.getElementById('remake').style.visibility = "hidden";
