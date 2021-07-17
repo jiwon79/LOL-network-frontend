@@ -1,10 +1,8 @@
 #search-content {
   position: absolute;
   height: 50px;
-  width: 300px;
-  margin-left: 290px;
   top: 50%;
-  left: 50%;
+  left: calc(50% + 150px);
   transform: translate(-50%, -50%);
 }
 
