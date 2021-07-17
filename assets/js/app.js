@@ -9,12 +9,12 @@ var options = null;
 var data = null;
 
 
-function draw() {
-
+function draw_test(userName) {
   fetch("https://lol-network-api.herokuapp.com/")
     .then((response) => response.json())
     .then((inpData) => {
-      console.log(inpData)
+      console.log(userName);
+      console.log(inpData);
       nodes = []
       options = {
         layout: {
@@ -47,11 +47,12 @@ function draw() {
           inpData.node[i].image = 'https://opgg-static.akamaized.net/images/profile_icons/profileIcon4661.jpg?image=q_auto:best&v=1518361200';
         }
       }
+
+
       nodes = inpData.node
 
-
       edges = inpData.edge
-
+      console.log(nodes, edges);
 
       container = document.getElementById("mynetwork");
 
@@ -67,6 +68,74 @@ function draw() {
     });
 }
 
+function draw(userName) {
+  fetch("https://lol-network-api.herokuapp.com/friend/"+userName)
+  .then((response) => response.json())
+  .then((inpData) => {
+    console.log(inpData);
+    nodes = []
+    options = {
+      layout: {
+        // randomSeed: 0
+      },
+      nodes: {
+        borderWidth: 0,
+        shape: "circularImage",
+        image: 'https://opgg-static.akamaized.net/images/profile_icons/profileIcon1394.jpg?image=q_auto:best&v=1518361200',
+        scaling: {
+          customScalingFunction: function (min, max, total, value) {
+            return value / total;
+          },
+          min: 5,
+          max: 150,
+        },
+        font: {
+          size: 20,
+        }
+      },
+      edges: {
+        color: "#757575"
+      },
+    };
+
+    nodes = [{
+      "id": userName,
+      "value": 2,
+      "image": inpData.profileImage,
+      "label": userName
+    }];
+    edges = []
+    friend = inpData.friend;
+    
+    for (var i=0; i<friend.length; i++) {
+      var nickName = Object.keys(friend[i])[0];
+      nodes.push({
+        "id": nickName,
+        "value": 1,
+        "label": nickName
+      });
+      edges.push({
+        "from": userName,
+        "to": nickName,
+        "value": friend[i][nickName]
+      });
+    }
+
+    container = document.getElementById("mynetwork");
+
+    visnodes = new vis.DataSet(nodes);
+    visedges = new vis.DataSet(edges);
+    data = {
+      nodes: visnodes,
+      edges: visedges,
+    };
+    console.log(edges)
+    network = new vis.Network(container, data, options);
+    document.getElementById('loading').style.display = "none";
+  });
+}
+
+
 // updated 2019
 const input = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
@@ -77,7 +146,6 @@ const expand = () => {
 };
 
 searchBtn.addEventListener("click", expand);
-
 
 function remake() {
   network = new vis.Network(container, data, options);
@@ -119,8 +187,8 @@ window.addEventListener("load", () => {
     document.getElementById('remake').style.display = "block";
     document.getElementById('loading').style.display = "block";
 
-    contactForm()
-    draw();
+    contactForm();
+    draw(userName);
 
   } else {
     document.getElementById('search-content').style.display = "block";
