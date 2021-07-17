@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'IM_Hyemin-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   margin: 0;
@@ -6,7 +20,7 @@ body {
   text-align: center;
   display: flex;
   flex-direction: column;
-  font-family: 'Lato', sans-serif;
+  font-family: 'IM_Hyemin-Bold';
   background: #e2dedb;
   color: #6d6c6c;
 }
@@ -39,7 +53,6 @@ body {
 }
 
 #remake {
-  font-family: 'Lato', sans-serif;
   font-size: 0.875em;
   margin: auto;
   width: 100px;
@@ -56,6 +69,7 @@ body {
   width: 100%;
   bottom: 0;
   padding: 10px 0 10px 0;
+  font-family: 'NEXON Lv1 Gothic OTF';
 }
 
 .footer p {
