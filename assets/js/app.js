@@ -112,7 +112,7 @@ const userName = urlParams.get('input')
 
 window.addEventListener("load", () => {
   if (userName != null) {
-
+    document.querySelector(".footer").style.position = "relative";
     document.getElementById('search-content').style.display = "none";
     document.getElementById('mynetwork').style.display = "block";
     document.getElementById('contact-form').style.display = "block";
