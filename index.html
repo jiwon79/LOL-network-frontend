@@ -13,43 +13,32 @@
       emailjs.init('user_OovTInGxAMYVFSYNf4tWp');
     })();
   </script>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  <title>LOL Network</title>
 </head>
 
 <body>
-  streamer LOL network
+  <div class="title">
+    streamer LOL network
+  </div>
   <form id="search-content">
     <input type="text" name="input" class="search-input input" id="search-input">
     <button type="reset" class="search" id="search-btn"></button>
   </form>
 
-  
   <div class="loading" id = "loading">Loading&#8230;</div>
   <div id="mynetwork" style="visibility: hidden;">
   </div>
-  <script type="text/javascript" src="app.js"> </script>
   <button id="remake" style="visibility: hidden;" onclick="remake()">Remake</button>
-
+  
   <form id="contact-form" style="visibility: hidden;" class="topBefore">
     <input type = "hidden" name = "contact_number">
     <input class = "contact" id="name" type="text" name = "user_name" placeholder="NAME">
     <input class = "contact" id="email" type="text" name = "user_email" placeholder="E-MAIL">
     <textarea id="message" type="text" name = "message" placeholder="MESSAGE"></textarea>
     <input class = "contact" id="submit" type="submit" value="FEED BACK TO US!">
-
   </form>
-
-  <!-- <form id="contact-form">
-    <input type="hidden" id="contact" name="contact_number">
-    <label>Name</label>
-    <input type="text" id="contact" name="user_name">
-    <label>Email</label>
-    <input type="email" id="contact" name="user_email">
-    <label>Message</label>
-    <textarea name="message"></textarea>
-    <input type="submit" value="Send">
-  </form> -->
+  
+  <script type="text/javascript" src="./assets/js/app.js"></script>
 </body>
-
 </html>
