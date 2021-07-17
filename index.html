@@ -29,19 +29,20 @@
     <button type="reset" class="search" id="search-btn"></button>
   </form>
 
-  <div class="loading" id = "loading">Loading&#8230;</div>
-  <div id="mynetwork" style="visibility: hidden;">
+  <div class="loading" id="loading">Loading&#8230;</div>
+  <div id="mynetwork">
   </div>
-  <button id="remake" style="visibility: hidden;" onclick="remake()">Remake</button>
-  
-  <form id="contact-form" style="visibility: hidden;" class="topBefore">
-    <input type = "hidden" name = "contact_number">
-    <input class = "contact" id="name" type="text" name = "user_name" placeholder="NAME">
-    <input class = "contact" id="email" type="text" name = "user_email" placeholder="E-MAIL">
-    <textarea id="message" type="text" name = "message" placeholder="MESSAGE"></textarea>
-    <input class = "contact" id="submit" type="submit" value="FEED BACK TO US!">
+  <button id="remake" onclick="remake()">Remake</button>
+
+  <form id="contact-form" class="topBefore">
+    <input type="hidden" name="contact_number">
+    <input class="contact" id="name" type="text" name="user_name" placeholder="NAME">
+    <input class="contact" id="email" type="text" name="user_email" placeholder="E-MAIL">
+    <textarea id="message" type="text" name="message" placeholder="MESSAGE"></textarea>
+    <input class="contact" id="submit" type="submit" value="FEED BACK TO US!">
   </form>
-  
+
   <script type="text/javascript" src="./assets/js/app.js"></script>
 </body>
+
 </html>

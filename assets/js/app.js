@@ -63,10 +63,7 @@ function draw() {
       };
       console.log(edges)
       network = new vis.Network(container, data, options);
-      document.getElementById('loading').style.visibility = "hidden";
-
-
-
+      document.getElementById('loading').style.display = "none";
     });
 }
 
@@ -82,13 +79,10 @@ const expand = () => {
 searchBtn.addEventListener("click", expand);
 
 
-
-
-
-
 function remake() {
   network = new vis.Network(container, data, options);
 }
+
 function contactForm() {
   document.getElementById('contact-form').addEventListener('submit', function (event) {
     event.preventDefault();
@@ -117,64 +111,63 @@ const userName = urlParams.get('input')
 
 
 window.addEventListener("load", () => {
-  if(userName!=null){
+  if (userName != null) {
 
-    document.getElementById('search-content').style.visibility = "hidden";
-    document.getElementById('mynetwork').style.visibility = "visible";
-    document.getElementById('contact-form').style.visibility = "visible";
-    document.getElementById('remake').style.visibility = "visible";
-    document.getElementById('loading').style.visibility = "visible";
+    document.getElementById('search-content').style.display = "none";
+    document.getElementById('mynetwork').style.display = "block";
+    document.getElementById('contact-form').style.display = "block";
+    document.getElementById('remake').style.display = "block";
+    document.getElementById('loading').style.display = "block";
 
     contactForm()
     draw();
 
-  }
-  else{
-    document.getElementById('search-content').style.visibility = "visible";
-    document.getElementById('loading').style.visibility = "hidden";
-    document.getElementById('mynetwork').style.visibility = "hidden";
-    document.getElementById('contact-form').style.visibility = "hidden";
-    document.getElementById('remake').style.visibility = "hidden";
+  } else {
+    document.getElementById('search-content').style.display = "block";
+    document.getElementById('loading').style.display = "none";
+    document.getElementById('mynetwork').style.display = "none";
+    document.getElementById('contact-form').style.display = "none";
+    document.getElementById('remake').style.display = "none";
   }
 });
 
 // edge and node push
-  // edges.push({
-  //   from: "new",
-  //   value: 10,
-  //   to: "꿀벌지민"
-  // })
-  // edges.push({
-  //   from: "new",
-  //   value: 20,
-  //   to: "마리마리착마리"
-  // })
+// edges.push({
+//   from: "new",
+//   value: 10,
+//   to: "꿀벌지민"
+// })
+// edges.push({
+//   from: "new",
+//   value: 20,
+//   to: "마리마리착마리"
+// })
 
 
-  // edges.push({
-  //   from: "new2",
-  //   value: 10,
-  //   to: "new"
-  // })
-  // edges.push({
-  //   from: "new2",
-  //   value: 20,
-  //   to: "마리마리착마리"
-  // })
+// edges.push({
+//   from: "new2",
+//   value: 10,
+//   to: "new"
+// })
+// edges.push({
+//   from: "new2",
+//   value: 20,
+//   to: "마리마리착마리"
+// })
 
-  // edges.push({
-  //   from: "new2",
-  //   value: 30,
-  //   to: "리듬타지마"
-  // })
+// edges.push({
+//   from: "new2",
+//   value: 30,
+//   to: "리듬타지마"
+// })
 
-  // nodes.push({
-  //   label: 'new',
-  //   id: 'new',
-  // })
-  // nodes.push({
-  //   label: 'new2',
-  //   id: 'new2',
-  // })
-  // visedges.update(edges)
-  // visnodes.update(nodes)
+// nodes.push({
+//   label: 'new',
+//   id: 'new',
+// })
+// nodes.push({
+//   label: 'new2',
+//   id: 'new2',
+// })
+// visedges.update(edges)
+// visnodes.update(nodes)
