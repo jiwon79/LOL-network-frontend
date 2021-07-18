@@ -98,6 +98,7 @@ function draw(userName) {
       }
       index = nodes.findIndex(adjectionNode);
       nodes[index]['image'] = userInfo['profileImage'];
+      
       friend = userInfo.friend;
       var randomColor = COLOR[Math.floor(Math.random() * COLOR.length)];
       
@@ -117,7 +118,11 @@ function draw(userName) {
           "value": friend[j][nickName],
           "color": randomColor
         })
-        nodes[0]["value"] = nodeName.length/2;
+      }
+      // modified network
+      nodes[0]["value"] *= Math.log(nodeName.length)/2;
+      for (var j=1; j<friends.length+1; j++) {
+        nodes[j]["value"] *= Math.log(nodeName.length)/2;
       }
       drawNetwork(nodes, edges)
     }
