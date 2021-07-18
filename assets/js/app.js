@@ -89,16 +89,21 @@ function draw(userName) {
     for (var i=0; i<friends.length; i++) {
       // draw edge from friends[i]
       var userInfo = await userEdge(friends[i]);
-      // node = nodeName.filter((data) => {
-      //   return data.id == friends[i]
-      // })
-
-
-      console.log(friends[i]);
+      console.log(userInfo);
+      function adjectionNode(element, index, array) {
+        if (element['id'] == friends[i]) {
+          return index;
+        }
+        return false;
+      }
+      index = nodes.findIndex(adjectionNode);
+      nodes[index]['image'] = userInfo['profileImage'];
       friend = userInfo.friend;
+      var randomColor = COLOR[Math.floor(Math.random() * COLOR.length)];
+      
       for (var j=0; j<friend.length; j++) {
         var nickName = Object.keys(friend[j])[0];
-        if (!nodeName.includes(nickName) || !userName.replaceAll(" ","")==nickName.replaceAll(" ","")) {
+        if (!nodeName.includes(nickName) && userName.replaceAll(" ","")!=nickName.replaceAll(" ","")) {
           nodes.push({
             "id": nickName,
             "value": Math.log(friend[j][nickName]),
@@ -109,7 +114,8 @@ function draw(userName) {
         edges.push({
           "from": friends[i],
           "to": nickName,
-          "value": friend[j][nickName]
+          "value": friend[j][nickName],
+          "color": randomColor
         })
         nodes[0]["value"] = nodeName.length/2;
       }
