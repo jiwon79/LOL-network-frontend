@@ -180,6 +180,7 @@ const userName = urlParams.get('input')
 window.addEventListener("load", () => {
   if (userName != null) {
     document.querySelector(".footer").style.position = "relative";
+    document.querySelector(".network__explain").style.display = "block";
     document.getElementById('search-content').style.display = "none";
     document.getElementById('mynetwork').style.display = "block";
     document.getElementById('contact-form').style.display = "block";
@@ -191,6 +192,7 @@ window.addEventListener("load", () => {
 
   } else {
     document.getElementById('search-content').style.display = "block";
+    document.querySelector(".network__explain").style.display = "none";
     document.getElementById('loading').style.display = "none";
     document.getElementById('mynetwork').style.display = "none";
     document.getElementById('contact-form').style.display = "none";
