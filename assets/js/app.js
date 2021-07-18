@@ -8,130 +8,113 @@ var container = null;
 var options = null;
 var data = null;
 
+const COLOR = ["#FC9EBD", "#FFADC5", "#FFA9B0", "#FFCCCC", "#CCD1FF", "#A8C8F9", "#FFDDA6", "#B8F3B8"]
+options = {
+  layout: {
+    // randomSeed: 0
+  },
+  nodes: {
+    borderWidth: 0,
+    shape: "circularImage",
+    image: 'https://opgg-static.akamaized.net/images/profile_icons/profileIcon1394.jpg?image=q_auto:best&v=1518361200',
+    scaling: {
+      customScalingFunction: function (min, max, total, value) {
+        return value / total;
+      },
+      min: 5,
+      max: 150,
+    },
+    font: {
+      size: 20,
+    }
+  },
+  edges: {
+    color: "#CCD1FF"
+  },
+};
 
-function draw_test(userName) {
-  fetch("https://lol-network-api.herokuapp.com/")
-    .then((response) => response.json())
-    .then((inpData) => {
-      console.log(userName);
-      console.log(inpData);
-      nodes = []
-      options = {
-        layout: {
-          // randomSeed: 0
-        },
-        nodes: {
-          borderWidth: 0,
-          shape: "circularImage",
-          image: 'https://opgg-static.akamaized.net/images/profile_icons/profileIcon1394.jpg?image=q_auto:best&v=1518361200',
-          scaling: {
-            customScalingFunction: function (min, max, total, value) {
-              return value / total;
-            },
-            min: 5,
-            max: 150,
-          },
-          font: {
-            size: 20,
-          }
-        },
-        edges: {
-          color: "#757575"
-        },
-      };
+function userEdge(userName) {
+  var url = "https://lol-network-api.herokuapp.com/friend/"+userName;
+  return fetch(url).then(function(response) {
+    return response.json();
+  })
+}
 
-      for (var i = 0; i < inpData.node.length; i++) {
-        inpData.node[i].label = inpData.node[i].id;
-        if (inpData.node[i].label == '루모그래프') {
-          inpData.node[i].shape = 'circularImage';
-          inpData.node[i].image = 'https://opgg-static.akamaized.net/images/profile_icons/profileIcon4661.jpg?image=q_auto:best&v=1518361200';
-        }
-      }
-
-
-      nodes = inpData.node
-
-      edges = inpData.edge
-      console.log(nodes, edges);
-
-      container = document.getElementById("mynetwork");
-
-      visnodes = new vis.DataSet(nodes);
-      visedges = new vis.DataSet(edges);
-      data = {
-        nodes: visnodes,
-        edges: visedges,
-      };
-      console.log(edges)
-      network = new vis.Network(container, data, options);
-      document.getElementById('loading').style.display = "none";
-    });
+function drawNetwork(nodes, edges) {
+  container = document.getElementById("mynetwork");
+  visnodes = new vis.DataSet(nodes);
+  visedges = new vis.DataSet(edges);
+  data = {
+    nodes: visnodes,
+    edges: visedges,
+  };
+  network = new vis.Network(container, data, options);
 }
 
 function draw(userName) {
   fetch("https://lol-network-api.herokuapp.com/friend/"+userName)
   .then((response) => response.json())
   .then((inpData) => {
-    console.log(inpData);
-    nodes = []
-    options = {
-      layout: {
-        // randomSeed: 0
-      },
-      nodes: {
-        borderWidth: 0,
-        shape: "circularImage",
-        image: 'https://opgg-static.akamaized.net/images/profile_icons/profileIcon1394.jpg?image=q_auto:best&v=1518361200',
-        scaling: {
-          customScalingFunction: function (min, max, total, value) {
-            return value / total;
-          },
-          min: 5,
-          max: 150,
-        },
-        font: {
-          size: 20,
-        }
-      },
-      edges: {
-        color: "#757575"
-      },
-    };
-
+    friends = [];
+    friend = inpData.friend;
+    nodeName = [userName];
     nodes = [{
       "id": userName,
-      "value": 2,
+      "value": friend.length*1.5,
       "image": inpData.profileImage,
       "label": userName
     }];
     edges = []
-    friend = inpData.friend;
     
     for (var i=0; i<friend.length; i++) {
       var nickName = Object.keys(friend[i])[0];
       nodes.push({
         "id": nickName,
-        "value": 1,
+        "value": Math.log(friend[i][nickName])*3,
         "label": nickName
       });
+      nodeName.push(nickName);
       edges.push({
         "from": userName,
         "to": nickName,
         "value": friend[i][nickName]
       });
+      friends.push(nickName);
     }
-
-    container = document.getElementById("mynetwork");
-
-    visnodes = new vis.DataSet(nodes);
-    visedges = new vis.DataSet(edges);
-    data = {
-      nodes: visnodes,
-      edges: visedges,
-    };
-    console.log(edges)
-    network = new vis.Network(container, data, options);
+    drawNetwork(nodes, edges)
     document.getElementById('loading').style.display = "none";
+  })
+  .then(async () => {
+    console.log(friends);
+    for (var i=0; i<friends.length; i++) {
+      // draw edge from friends[i]
+      var userInfo = await userEdge(friends[i]);
+      // node = nodeName.filter((data) => {
+      //   return data.id == friends[i]
+      // })
+
+
+      console.log(friends[i]);
+      friend = userInfo.friend;
+      for (var j=0; j<friend.length; j++) {
+        var nickName = Object.keys(friend[j])[0];
+        if (!nodeName.includes(nickName) || !userName.replaceAll(" ","")==nickName.replaceAll(" ","")) {
+          nodes.push({
+            "id": nickName,
+            "value": Math.log(friend[j][nickName]),
+            "label": nickName
+          })
+          nodeName.push(nickName);
+        }
+        edges.push({
+          "from": friends[i],
+          "to": nickName,
+          "value": friend[j][nickName]
+        })
+        nodes[0]["value"] = nodeName.length/2;
+      }
+      drawNetwork(nodes, edges)
+    }
   });
 }
 
@@ -172,11 +155,8 @@ function contactForm() {
 }
 
 const queryString = window.location.search;
-
 const urlParams = new URLSearchParams(queryString);
-
 const userName = urlParams.get('input')
-
 
 window.addEventListener("load", () => {
   if (userName != null) {
@@ -198,44 +178,3 @@ window.addEventListener("load", () => {
     document.getElementById('remake').style.display = "none";
   }
 });
-
-// edge and node push
-// edges.push({
-//   from: "new",
-//   value: 10,
-//   to: "꿀벌지민"
-// })
-// edges.push({
-//   from: "new",
-//   value: 20,
-//   to: "마리마리착마리"
-// })
-
-
-// edges.push({
-//   from: "new2",
-//   value: 10,
-//   to: "new"
-// })
-// edges.push({
-//   from: "new2",
-//   value: 20,
-//   to: "마리마리착마리"
-// })
-
-// edges.push({
-//   from: "new2",
-//   value: 30,
-//   to: "리듬타지마"
-// })
-
-// nodes.push({
-//   label: 'new',
-//   id: 'new',
-// })
-// nodes.push({
-//   label: 'new2',
-//   id: 'new2',
-// })
-// visedges.update(edges)
-// visnodes.update(nodes)
