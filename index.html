@@ -13,43 +13,49 @@
       emailjs.init('user_OovTInGxAMYVFSYNf4tWp');
     })();
   </script>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/loading.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/contact.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/search.css">
+  <title>LOL Network</title>
 </head>
 
 <body>
-  streamer LOL network
+  <div class="header">
+    <a href="./index.html"><img src="./assets/img/logo.png" alt="logo"></a>
+    <span>LOL network</span>
+  </div>
   <form id="search-content">
     <input type="text" name="input" class="search-input input" id="search-input">
     <button type="reset" class="search" id="search-btn"></button>
   </form>
-
   
-  <div class="loading" id = "loading">Loading&#8230;</div>
-  <div id="mynetwork" style="visibility: hidden;">
+  <div id="mynetwork">
   </div>
-  <script type="text/javascript" src="app.js"> </script>
-  <button id="remake" style="visibility: hidden;" onclick="remake()">Remake</button>
-
-  <form id="contact-form" style="visibility: hidden;" class="topBefore">
-    <input type = "hidden" name = "contact_number">
-    <input class = "contact" id="name" type="text" name = "user_name" placeholder="NAME">
-    <input class = "contact" id="email" type="text" name = "user_email" placeholder="E-MAIL">
-    <textarea id="message" type="text" name = "message" placeholder="MESSAGE"></textarea>
-    <input class = "contact" id="submit" type="submit" value="FEED BACK TO US!">
-
+  <button id="remake" onclick="remake()">Remake</button>
+  <p class="network__explain">
+    * 인접한 사람의 네트워크는 차례로 업데이트 됩니다.<br/>
+    * 최근 100게임으로 네트워크를 그립니다.<br/>
+    * 같이 한 판수가 많을수록 두꺼운 선으로 그려집니다.
+  </p>
+  
+  <form id="contact-form" class="topBefore">
+    <p>Contact Us</p>
+    <input type="hidden" name="contact_number">
+    <input class="contact" id="name" type="text" name="user_name" placeholder="NAME">
+    <input class="contact" id="email" type="text" name="user_email" placeholder="E-MAIL">
+    <textarea id="message" type="text" name="message" placeholder="웹사이트의 모든 피드백을 적어주세요!"></textarea>
+    <input class="contact" id="submit" type="submit" value="FEED BACK TO US!">
   </form>
 
-  <!-- <form id="contact-form">
-    <input type="hidden" id="contact" name="contact_number">
-    <label>Name</label>
-    <input type="text" id="contact" name="user_name">
-    <label>Email</label>
-    <input type="email" id="contact" name="user_email">
-    <label>Message</label>
-    <textarea name="message"></textarea>
-    <input type="submit" value="Send">
-  </form> -->
+  <div class="footer">
+    <p>LOL Network Website</p>
+    <p>제작자: 문지환, 이지원</p>
+    <p>&copy; 2021. 문지환, 이지원 all rights reserved</p>
+  </div>
+  
+  <div class="loading" id="loading">Loading&#8230;</div>
+  <script type="text/javascript" src="./assets/js/app.js"></script>
 </body>
 
 </html>
