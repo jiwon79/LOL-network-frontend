@@ -16,7 +16,7 @@ options = {
   nodes: {
     borderWidth: 0,
     shape: "circularImage",
-    image: 'https://opgg-static.akamaized.net/images/profile_icons/profileIcon1394.jpg?image=q_auto:best&v=1518361200',
+    image: 'https://cdn-store.leagueoflegends.co.kr/images/v2/profileicons/4025.jpg',
     scaling: {
       customScalingFunction: function (min, max, total, value) {
         return value / total;
