@@ -112,12 +112,20 @@ function draw(userName) {
           })
           nodeName.push(nickName);
         }
-        edges.push({
-          "from": friends[i],
-          "to": nickName,
-          "value": friend[j][nickName],
-          "color": randomColor
-        })
+
+        var commonEdge = edges.filter(
+          function(edges) {
+            return edges["to"] == friends[i] && edges["from"] == nickName
+          }
+        )
+        if (commonEdge.length == 0) {
+          edges.push({
+            "from": friends[i],
+            "to": nickName,
+            "value": friend[j][nickName],
+            "color": randomColor
+          })
+        }
       }
       // modified network
       nodes[0]["value"] *= Math.log(nodeName.length)/2;
