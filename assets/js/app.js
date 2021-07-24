@@ -31,6 +31,7 @@ options = {
   edges: {
     color: "#CCD1FF"
   },
+
 };
 
 function userEdge(userName) {
