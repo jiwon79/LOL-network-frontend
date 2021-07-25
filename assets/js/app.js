@@ -180,6 +180,7 @@ const userName = urlParams.get('input')
 
 window.addEventListener("load", () => {
   if (userName != null) {
+    document.querySelector('.explain').style.display = "none";
     document.querySelector(".footer").style.position = "relative";
     document.querySelector(".network__explain").style.display = "block";
     document.getElementById('search-content').style.display = "none";
