@@ -80,3 +80,15 @@ body {
 .footer p {
   margin: 5px 0 5px 0;
 }
+
+@media screen and (max-width:728px) {
+  .ad_kakao:nth-child(2) {
+    display: none;
+  }
+}
+
+@media screen and (min-width:728px) {
+  .ad_kakao:nth-child(1) {
+    display: none;
+  }
+}
