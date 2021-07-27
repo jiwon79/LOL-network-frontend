@@ -17,6 +17,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100vw;
+  min-width: 384px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -69,10 +70,12 @@ body {
   font-family: 'NEXON Lv1 Gothic OTF';
 }
 
+.blank {
+  height: 60vh;
+}
+
 .footer {
-  position: absolute;
   width: 100%;
-  bottom: 0;
   padding: 10px 0 10px 0;
   font-family: 'NEXON Lv1 Gothic OTF';
 }
