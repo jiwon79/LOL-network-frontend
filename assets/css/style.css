@@ -69,10 +69,12 @@ body {
   font-family: 'NEXON Lv1 Gothic OTF';
 }
 
+.blank {
+  height: 60vh;
+}
+
 .footer {
-  position: absolute;
   width: 100%;
-  bottom: 0;
   padding: 10px 0 10px 0;
   font-family: 'NEXON Lv1 Gothic OTF';
 }
