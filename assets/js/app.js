@@ -8,6 +8,8 @@ var container = null;
 var options = null;
 var data = null;
 
+const DEPTH_LIMIT_1 = 15;
+const DEPTH_LIMIT_2 = 8;
 const COLOR = ["#FC9EBD", "#FFADC5", "#FFA9B0", "#FFCCCC", "#CCD1FF", "#A8C8F9", "#FFDDA6", "#B8F3B8"]
 options = {
   layout: {
@@ -72,7 +74,7 @@ function draw(userName) {
     }];
     edges = []
     
-    for (var i=0; i<friend.length; i++) {
+    for (var i=0; i<Math.min(friend.length, DEPTH_LIMIT_1); i++) {
       var nickName = Object.keys(friend[i])[0];
       nodes.push({
         "id": nickName,
@@ -83,7 +85,7 @@ function draw(userName) {
       edges.push({
         "from": userName,
         "to": nickName,
-        "value": friend[i][nickName]*3
+        "value": Math.log(friend[i][nickName])*1.5
       });
       friends.push(nickName);
     }
@@ -95,6 +97,8 @@ function draw(userName) {
     for (var i=0; i<friends.length; i++) {
       // draw edge from friends[i]
       var userInfo = await userEdge(friends[i]);
+      var count = 0;
+
       function adjectionNode(element, index, array) {
         if (element['id'] == friends[i]) {
           return index;
@@ -108,8 +112,12 @@ function draw(userName) {
       var randomColor = COLOR[Math.floor(Math.random() * COLOR.length)];
       
       for (var j=0; j<friend.length; j++) {
+        if (count == DEPTH_LIMIT_2) {
+          break;
+        }
         var nickName = Object.keys(friend[j])[0];
         if (!nodeName.includes(nickName) && userName.replaceAll(" ","")!=nickName.replaceAll(" ","")) {
+          count += 1;
           nodes.push({
             "id": nickName,
             "value": Math.log(friend[j][nickName]),
@@ -127,7 +135,7 @@ function draw(userName) {
           edges.push({
             "from": friends[i],
             "to": nickName,
-            "value": friend[j][nickName],
+            "value": Math.log(friend[j][nickName]),
             "color": randomColor
           })
         }
