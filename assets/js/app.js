@@ -56,12 +56,17 @@ function draw(userName) {
   fetch("https://lol-network-api.herokuapp.com/friend/"+userName)
   .then((response) => response.json())
   .then((inpData) => {
+    if (inpData["result"] == "no-summoner") {
+      document.getElementById('loading').style.display = "none";
+      alert("해당 소환사의 정보가 없습니다. 닉네임을 다시 확인해주세요.");
+    }
+
     friends = [];
     friend = inpData.friend;
     nodeName = [userName];
     nodes = [{
       "id": userName,
-      "value": friend.length*1.5,
+      "value": friend.length*1.3,
       "image": inpData.profileImage,
       "label": userName
     }];
@@ -78,7 +83,7 @@ function draw(userName) {
       edges.push({
         "from": userName,
         "to": nickName,
-        "value": friend[i][nickName]
+        "value": friend[i][nickName]*3
       });
       friends.push(nickName);
     }
@@ -90,7 +95,6 @@ function draw(userName) {
     for (var i=0; i<friends.length; i++) {
       // draw edge from friends[i]
       var userInfo = await userEdge(friends[i]);
-      console.log(userInfo);
       function adjectionNode(element, index, array) {
         if (element['id'] == friends[i]) {
           return index;
