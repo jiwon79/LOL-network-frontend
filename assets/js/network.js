@@ -11,6 +11,11 @@ var data = null;
 const DEPTH_LIMIT_1 = 15;
 const DEPTH_LIMIT_2 = 8;
 const COLOR = ["#FC9EBD", "#FFADC5", "#FFA9B0", "#FFCCCC", "#CCD1FF", "#A8C8F9", "#FFDDA6", "#B8F3B8"]
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const userName = urlParams.get('input')
+
 options = {
   layout: {
     // randomSeed: 0
@@ -35,6 +40,10 @@ options = {
   },
 
 };
+
+function remake() {
+  network = new vis.Network(container, data, options);
+}
 
 function userEdge(userName) {
   var url = "https://lol-network-api.azurewebsites.net/friend/"+userName;
@@ -150,66 +159,4 @@ function draw(userName) {
   });
 }
 
-
-// updated 2019
-const input = document.getElementById("search-input");
-const searchBtn = document.getElementById("search-btn");
-
-const expand = () => {
-  searchBtn.classList.toggle("close");
-  input.classList.toggle("square");
-};
-
-searchBtn.addEventListener("click", expand);
-
-function remake() {
-  network = new vis.Network(container, data, options);
-}
-
-function contactForm() {
-  document.getElementById('contact-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    // generate a five digit number for the contact_number variable
-    this.contact_number.value = Math.random() * 100000 | 0;
-    // these IDs from the previous steps
-
-    emailjs.sendForm('service_0gal12i', 'template_wqvlu05', this)
-      .then(function () {
-        console.log('SUCCESS!');
-        document.getElementById('name').value = "";
-        document.getElementById('email').value = "";
-        document.getElementById('message').value = "";
-
-      }, function (error) {
-        console.log('FAILED...', error);
-      });
-  });
-}
-
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const userName = urlParams.get('input')
-
-window.addEventListener("load", () => {
-  if (userName != null) {
-    document.querySelector('.explain').style.display = "none";
-    document.querySelector('.blank').style.display = "none";
-    document.querySelector(".network__explain").style.display = "block";
-    document.getElementById('search-content').style.display = "none";
-    document.getElementById('mynetwork').style.display = "block";
-    document.getElementById('contact-form').style.display = "block";
-    document.getElementById('remake').style.display = "block";
-    document.getElementById('loading').style.display = "block";
-
-    contactForm();
-    draw(userName);
-
-  } else {
-    document.getElementById('search-content').style.display = "block";
-    document.querySelector(".network__explain").style.display = "none";
-    document.getElementById('loading').style.display = "none";
-    document.getElementById('mynetwork').style.display = "none";
-    document.getElementById('contact-form').style.display = "none";
-    document.getElementById('remake').style.display = "none";
-  }
-});
+draw(userName);

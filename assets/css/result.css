@@ -1,0 +1,24 @@
+#mynetwork {
+  display: inline-block;
+  margin: auto;
+  width: min(100%, 770px);
+  height: 600px;
+  border: 1px solid #b3aca7;
+}
+
+#remake {
+  font-size: 0.875em;
+  margin: auto;
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;;
+  padding: 0px 15px 0px 15px;
+  background: transparent;
+  outline: none;
+  color: #726659;
+  border: solid 1px #b3aca7;
+}
+
+.network__explain {
+  font-family: 'NEXON Lv1 Gothic OTF';
+}
