@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  
+  <!-- email feedback service -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function () {
+      // https://dashboard.emailjs.com/admin/integration
+      emailjs.init('user_OovTInGxAMYVFSYNf4tWp');
+    })();
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BX4JDQ81WB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BX4JDQ81WB');
+  </script>
+  <link rel="stylesheet" type="text/css" href="./../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="./../assets/css/result.css">
+  <link rel="stylesheet" type="text/css" href="./../assets/css/loading.css">
+  <link rel="stylesheet" type="text/css" href="./../assets/css/contact.css">
+  <title>lol-network</title>
+</head>
+
+<body>
+  <div class="header">
+    <div data-include-path="./header.html"></div>
+  </div>
+
+  <div id="mynetwork"></div>
+  <button id="remake" onclick="remake()">Remake</button>
+  <p class="network__explain">
+    * 인접한 사람의 네트워크는 차례로 업데이트 됩니다.<br/>
+    * 최근 100게임으로 네트워크를 그립니다.<br/>
+    * 최대 15명의 인접한 사람을 그려줍니다.<br/>
+    * 같이 한 판수가 많을수록 두꺼운 선으로 그려집니다.<br/>
+    * 노드를 마우스로 드래그해서 움직일 수 있습니다!
+  </p>
+
+  <form id="contact-form" class="topBefore">
+    <p>Contact Us</p>
+    <input type="hidden" name="contact_number">
+    <input class="contact" id="name" type="text" name="user_name" placeholder="NAME">
+    <input class="contact" id="email" type="text" name="user_email" placeholder="E-MAIL">
+    <textarea id="message" type="text" name="message" placeholder="웹사이트의 모든 피드백을 적어주세요!"></textarea>
+    <input class="contact" id="submit" type="submit" value="FEED BACK TO US!">
+  </form>
+
+  <div class="footer">
+    <div class="ad_kakao">
+      <ins class="kakao_ad_area" style="display:none;"
+        data-ad-unit    = "DAN-fGlz207uzX2FwrF1" 
+        data-ad-width   = "300" 
+        data-ad-height  = "250">
+      </ins> 
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    </div>
+    <div class="ad_kakao">
+      <ins class="kakao_ad_area" style="display:none;" 
+        data-ad-unit    = "DAN-LVEWUTAUSX15Z1gL" 
+        data-ad-width   = "728" 
+        data-ad-height  = "90">
+      </ins> 
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    </div>
+    <div data-include-path="./footer.html"></div>
+  </div>
+
+  <div class="loading" id="loading">Loading&#8230;</div>
+
+  <script type="text/javascript" src="./../assets/js/network.js"></script>
+  <script type="text/javascript" src="./../assets/js/contact.js"></script>
+  <script type="text/javascript" src="./../assets/js/loadHTML.js"></script>
+</body>
+</html>
