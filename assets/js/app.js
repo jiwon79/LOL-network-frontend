@@ -37,7 +37,7 @@ options = {
 };
 
 function userEdge(userName) {
-  var url = "https://lol-network-api.herokuapp.com/friend/"+userName;
+  var url = "https://lol-network-api.azurewebsites.net/friend/"+userName;
   return fetch(url).then(function(response) {
     return response.json();
   })
@@ -55,7 +55,7 @@ function drawNetwork(nodes, edges) {
 }
 
 function draw(userName) {
-  fetch("https://lol-network-api.herokuapp.com/friend/"+userName)
+  fetch("https://lol-network-api.azurewebsites.net/friend/"+userName)
   .then((response) => response.json())
   .then((inpData) => {
     if (inpData["result"] == "no-summoner") {
