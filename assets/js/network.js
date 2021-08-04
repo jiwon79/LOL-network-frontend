@@ -16,6 +16,8 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const userName = urlParams.get('input')
 
+const progressBar = document.querySelector('.progress-bar');
+
 options = {
   layout: {
     // randomSeed: 0
@@ -100,12 +102,19 @@ function draw(userName) {
     }
     drawNetwork(nodes, edges)
     document.getElementById('loading').style.display = "none";
+    progressBar.style.width = String(100/(friends.length+1))+'%';
   })
   .then(async () => {
     console.log(friends);
     for (var i=0; i<friends.length; i++) {
       // draw edge from friends[i]
       var userInfo = await userEdge(friends[i]);
+      console.log(userInfo);
+      progressBar.style.width = String(100*(i+2)/(friends.length+1))+'%';
+      if (i==friends.length-1) {
+        document.querySelector('.progress').style.display = "none";
+        document.querySelector('.progress-text').style.display = "none";
+      }
       var count = 0;
 
       function adjectionNode(element, index, array) {
