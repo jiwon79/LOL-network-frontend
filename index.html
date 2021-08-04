@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,9 +29,9 @@
 
 <body>
   <div class="header">
-    <a href="./index.html"><img src="./assets/img/logo.png" alt="logo"></a>
-    <span>LOL network</span>
+    <div data-include-path="./pages/header.html"></div>
   </div>
+
   <form id="search-content">
     <input type="text" name="input" class="search-input input" id="search-input">
     <button type="reset" class="search" id="search-btn"></button>
@@ -61,8 +60,6 @@
     <textarea id="message" type="text" name="message" placeholder="웹사이트의 모든 피드백을 적어주세요!"></textarea>
     <input class="contact" id="submit" type="submit" value="FEED BACK TO US!">
   </form>
-
-
   
   <div class="ad_google">
     <script data-ad-client="ca-pub-7657643403207272" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -87,13 +84,12 @@
       </ins> 
       <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     </div>
-    <p>LOL Network Website</p>
-    <p>제작자: 문지환(mn) : borissal07@naver.com, 이지원 : jiiwon79@gmail.com</p>
-    <p>&copy; 2021. 문지환, 이지원 all rights reserved</p>
+    <div data-include-path="./pages/footer.html"></div>
   </div>
   
   <div class="loading" id="loading">Loading&#8230;</div>
   <script type="text/javascript" src="./assets/js/app.js"></script>
+  <script type="text/javascript" src="./assets/js/loadHTML.js"></script>
 </body>
 
 </html>
