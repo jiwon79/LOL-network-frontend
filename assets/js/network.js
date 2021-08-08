@@ -2,7 +2,6 @@ var nodes = null;
 var edges = null;
 var visnodes = null;
 var visedges = null;
-
 var network = null;
 var container = null;
 var options = null;
@@ -11,12 +10,6 @@ var data = null;
 const DEPTH_LIMIT_1 = 15;
 const DEPTH_LIMIT_2 = 8;
 const COLOR = ["#FC9EBD", "#FFADC5", "#FFA9B0", "#FFCCCC", "#CCD1FF", "#A8C8F9", "#FFDDA6", "#B8F3B8"]
-
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const userName = urlParams.get('input')
-
-const progressBar = document.querySelector('.progress-bar');
 
 options = {
   layout: {
@@ -42,9 +35,13 @@ options = {
   },
 };
 
-function remake() {
-  network = new vis.Network(container, data, options);
-}
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const userName = urlParams.get('input')
+
+const progressBar = document.querySelector('.progress-bar');
+var progressBarValue = 1;
+
 
 function drawNetwork(nodes, edges) {
   container = document.getElementById("mynetwork");
@@ -57,14 +54,54 @@ function drawNetwork(nodes, edges) {
   network = new vis.Network(container, data, options);
 }
 
+function remake() {
+  network = new vis.Network(container, data, options);
+}
+
+
+function pushDepth1Node(id, value, label) {
+  nodes.push({
+    "id": id,
+    "value": Math.log(value)*3,
+    "label": label
+  });
+}
+
+function pushDepth1Edge(from, to, value) {
+  edges.push({
+    "from": from,
+    "to": to,
+    "value": Math.log(value)*1.5
+  });
+}
+
+function pushDetph2Node(id, value, label) {
+  nodes.push({
+    "id": id,
+    "value": Math.log(value),
+    "label": label
+  })
+}
+
+function pushDetph2Edge(from, to, value, color) {
+  edges.push({
+    "from": from,
+    "to": to,
+    "value": Math.log(value),
+    "color": color
+  })
+}
+
+
 async function fetchUserFreind(userName) {
   var url = "https://lol-network-api-dev.azurewebsites.net/friend/"+userName;
   response = await fetch(url)
   return response.json()
 }
 
-async function drawDepth2Node(userName, i) {
-  let userInfo = await fetchUserFreind(userName)
+async function drawDepth2Node(userName, userNameList, i) {
+  var friendName = userNameList[i];
+  let userInfo = await fetchUserFreind(friendName)
   nodes[i]['image'] = userInfo['profileImage'];
       
   friend = userInfo.friend;
@@ -78,11 +115,7 @@ async function drawDepth2Node(userName, i) {
     var nickName = Object.keys(friend[j])[0];
     if (!nodeName.includes(nickName) && userName.replaceAll(" ","")!=nickName.replaceAll(" ","")) {
       count += 1;
-      nodes.push({
-        "id": nickName,
-        "value": Math.log(friend[j][nickName]),
-        "label": nickName
-      })
+      pushDepth2Node(nickName, friend[j][nickName], nickName)
       nodeName.push(nickName);
     }
 
@@ -92,12 +125,7 @@ async function drawDepth2Node(userName, i) {
       }
     )
     if (commonEdge.length == 0) {
-      edges.push({
-        "from": userName,
-        "to": nickName,
-        "value": Math.log(friend[j][nickName]),
-        "color": randomColor
-      })
+      pushDetph2Edge(friendName, nickName, freind[j][nickName], randomColor)
     }
   }
 
@@ -105,6 +133,15 @@ async function drawDepth2Node(userName, i) {
   nodes[0]["value"] *= Math.log(nodeName.length)/2;
   for (var j=1; j<friends.length+1; j++) {
     nodes[j]["value"] *= Math.log(nodeName.length)/2;
+  }
+
+  progressBarValue += 100/(userNameList.length+1);
+  console.log(progressBarValue);
+  progressBar.style.width = String(progressBarValue)+'%';
+  
+  if (progressBarValue > 100) {
+    document.querySelector('.progress').style.display = "none";
+    document.querySelector('.progress-text').style.display = "none";
   }
   
   drawNetwork(nodes, edges)
@@ -132,38 +169,24 @@ async function draw(userName) {
   
   for (var i=0; i<Math.min(friend.length, DEPTH_LIMIT_1); i++) {
     var nickName = Object.keys(friend[i])[0];
-    nodes.push({
-      "id": nickName,
-      "value": Math.log(friend[i][nickName])*3,
-      "label": nickName
-    });
     nodeName.push(nickName);
-    edges.push({
-      "from": userName,
-      "to": nickName,
-      "value": Math.log(friend[i][nickName])*1.5
-    });
+    pushDepth1Node(nickName, friend[i][nickName], nickName);
+    pushDepth1Edge(userName, nickName, friend[i][nickName])
+
     friends.push(nickName);
   }
-  drawNetwork(nodes, edges)
+  console.log(nodes, edges);
+  drawNetwork(nodes, edges);
   document.getElementById('loading').style.display = "none";
-  progressBar.style.width = String(100/(friends.length+1))+'%';
 
-    
+  progressBarValue += 100/(friend.length+1);
+  progressBar.style.width = String(progressBarValue)+'%';
     
   console.log(friends);
   for (var i=0; i<friends.length; i++) {
-    // draw edge from friends[i]
-    drawDepth2Node(friends[i], i)
-    
-
-      // console.log(userInfo);
-      // progressBar.style.width = String(100*(i+2)/(friends.length+1))+'%';
-      // if (i==friends.length-1) {
-      //   document.querySelector('.progress').style.display = "none";
-      //   document.querySelector('.progress-text').style.display = "none";
-      // }
+    drawDepth2Node(userName, friends, i)
   }
 }
+
 
 draw(userName);
