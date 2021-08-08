@@ -2,6 +2,7 @@ var nodes = null;
 var edges = null;
 var visnodes = null;
 var visedges = null;
+
 var network = null;
 var container = null;
 var options = null;
@@ -10,6 +11,13 @@ var data = null;
 const DEPTH_LIMIT_1 = 15;
 const DEPTH_LIMIT_2 = 8;
 const COLOR = ["#FC9EBD", "#FFADC5", "#FFA9B0", "#FFCCCC", "#CCD1FF", "#A8C8F9", "#FFDDA6", "#B8F3B8"]
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const userName = urlParams.get('input')
+
+const progressBar = document.querySelector('.progress-bar');
+var progressBarValue = 1;
 
 options = {
   layout: {
@@ -35,13 +43,9 @@ options = {
   },
 };
 
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const userName = urlParams.get('input')
-
-const progressBar = document.querySelector('.progress-bar');
-var progressBarValue = 1;
-
+function remake() {
+  network = new vis.Network(container, data, options);
+}
 
 function drawNetwork(nodes, edges) {
   container = document.getElementById("mynetwork");
@@ -54,45 +58,6 @@ function drawNetwork(nodes, edges) {
   network = new vis.Network(container, data, options);
 }
 
-function remake() {
-  network = new vis.Network(container, data, options);
-}
-
-
-function pushDepth1Node(id, value, label) {
-  nodes.push({
-    "id": id,
-    "value": Math.log(value)*3,
-    "label": label
-  });
-}
-
-function pushDepth1Edge(from, to, value) {
-  edges.push({
-    "from": from,
-    "to": to,
-    "value": Math.log(value)*1.5
-  });
-}
-
-function pushDetph2Node(id, value, label) {
-  nodes.push({
-    "id": id,
-    "value": Math.log(value),
-    "label": label
-  })
-}
-
-function pushDetph2Edge(from, to, value, color) {
-  edges.push({
-    "from": from,
-    "to": to,
-    "value": Math.log(value),
-    "color": color
-  })
-}
-
-
 async function fetchUserFreind(userName) {
   var url = "https://lol-network-api-dev.azurewebsites.net/friend/"+userName;
   response = await fetch(url)
@@ -102,6 +67,7 @@ async function fetchUserFreind(userName) {
 async function drawDepth2Node(userName, userNameList, i) {
   var friendName = userNameList[i];
   let userInfo = await fetchUserFreind(friendName)
+  console.log(userInfo);
   nodes[i]['image'] = userInfo['profileImage'];
       
   friend = userInfo.friend;
@@ -115,7 +81,11 @@ async function drawDepth2Node(userName, userNameList, i) {
     var nickName = Object.keys(friend[j])[0];
     if (!nodeName.includes(nickName) && userName.replaceAll(" ","")!=nickName.replaceAll(" ","")) {
       count += 1;
-      pushDepth2Node(nickName, friend[j][nickName], nickName)
+      nodes.push({
+        "id": nickName,
+        "value": Math.log(friend[j][nickName]),
+        "label": nickName
+      })
       nodeName.push(nickName);
     }
 
@@ -125,7 +95,12 @@ async function drawDepth2Node(userName, userNameList, i) {
       }
     )
     if (commonEdge.length == 0) {
-      pushDetph2Edge(friendName, nickName, freind[j][nickName], randomColor)
+      edges.push({
+        "from": friendName,
+        "to": nickName,
+        "value": Math.log(friend[j][nickName]),
+        "color": randomColor
+      })
     }
   }
 
@@ -169,24 +144,31 @@ async function draw(userName) {
   
   for (var i=0; i<Math.min(friend.length, DEPTH_LIMIT_1); i++) {
     var nickName = Object.keys(friend[i])[0];
+    nodes.push({
+      "id": nickName,
+      "value": Math.log(friend[i][nickName])*3,
+      "label": nickName
+    });
     nodeName.push(nickName);
-    pushDepth1Node(nickName, friend[i][nickName], nickName);
-    pushDepth1Edge(userName, nickName, friend[i][nickName])
-
+    edges.push({
+      "from": userName,
+      "to": nickName,
+      "value": Math.log(friend[i][nickName])*1.5
+    });
     friends.push(nickName);
   }
-  console.log(nodes, edges);
-  drawNetwork(nodes, edges);
+  drawNetwork(nodes, edges)
   document.getElementById('loading').style.display = "none";
 
   progressBarValue += 100/(friend.length+1);
+  console.log(progressBarValue);
   progressBar.style.width = String(progressBarValue)+'%';
     
   console.log(friends);
   for (var i=0; i<friends.length; i++) {
+
     drawDepth2Node(userName, friends, i)
   }
 }
-
 
 draw(userName);
