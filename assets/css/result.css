@@ -1,0 +1,58 @@
+#mynetwork {
+  display: inline-block;
+  margin: auto;
+  width: min(100%, 770px);
+  height: 600px;
+  border: 1px solid #b3aca7;
+}
+
+#remake {
+  font-size: 0.875em;
+  margin: auto;
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;;
+  padding: 0px 15px 0px 15px;
+  background: transparent;
+  outline: none;
+  color: #726659;
+  border: solid 1px #b3aca7;
+}
+
+.network__explain {
+  font-family: 'NEXON Lv1 Gothic OTF';
+}
+
+.progress {
+  box-sizing: border-box;
+  width : 100%;
+  max-width: 300px;
+  height: 15px;
+  margin: 0 auto 10px auto;
+  background: #e1e4e8;
+  border: 2px solid #222222;
+  border-radius: 3px;
+  overflow: hidden;
+}
+  
+.progress-text {
+  margin: 0 auto 5px auto;
+}
+
+.progress-bar {  
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg,#ffd33d,#ea4aaa 17%,#b34bff 34%,#01feff 51%,#ffd33d 68%,#ea4aaa 85%,#b34bff);
+  background-size: 300% 100%;
+  width: 1%;
+  animation: progress-animation 2s linear infinite
+}
+    
+@keyframes progress-animation{  
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
