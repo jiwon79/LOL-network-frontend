@@ -14,7 +14,8 @@ const COLOR = ["#FC9EBD", "#FFADC5", "#FFA9B0", "#FFCCCC", "#CCD1FF", "#A8C8F9",
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const userName = urlParams.get('input')
+const userName = urlParams.get('input');
+const depth = urlParams.get('depth');
 
 const progressBar = document.querySelector('.progress-bar');
 var progressBarValue = 1;
