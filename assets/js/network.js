@@ -69,10 +69,24 @@ async function fetchUserFreind(userName) {
   }
 }
 
+function addProgressValue(addValue) {
+  progressBarValue += addValue;
+  progressBar.style.width = String(progressBarValue)+'%';
+  
+  if (progressBarValue > 100) {
+    document.querySelector('.progress').style.display = "none";
+    document.querySelector('.progress-text').style.display = "none";
+  }
+}
+
 async function drawDepth2Node(userName, userNameList, i) {
   var friendName = userNameList[i];
   let userInfo = await fetchUserFreind(friendName)
   console.log(userInfo);
+  if (userInfo instanceof TypeError) {    
+    addProgressValue(100/(userNameList.length+1));
+    return undefined;
+  }
   nodes[i+1]['image'] = userInfo['profileImage'];
       
   friend = userInfo.friend;
@@ -115,20 +129,12 @@ async function drawDepth2Node(userName, userNameList, i) {
     nodes[j]["value"] *= Math.log(nodeName.length)/2;
   }
 
-  progressBarValue += 100/(userNameList.length+1);
-  console.log(progressBarValue);
-  progressBar.style.width = String(progressBarValue)+'%';
-  
-  if (progressBarValue > 100) {
-    document.querySelector('.progress').style.display = "none";
-    document.querySelector('.progress-text').style.display = "none";
-  }
-  
+  addProgressValue(100/(userNameList.length+1));
   drawNetwork(nodes, edges)
 }
 
 
-async function draw(userName) {
+async function main(userName) {
   var inpData = await fetchUserFreind(userName);
 
   if (inpData["result"] == "no-summoner") {
@@ -171,9 +177,8 @@ async function draw(userName) {
     
   console.log(friends);
   for (var i=0; i<friends.length; i++) {
-
     drawDepth2Node(userName, friends, i)
   }
 }
 
-draw(userName);
+main(userName);
