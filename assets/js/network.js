@@ -59,16 +59,21 @@ function drawNetwork(nodes, edges) {
 }
 
 async function fetchUserFreind(userName) {
-  var url = "https://lol-network-api-dev.azurewebsites.net/friend/"+userName;
-  response = await fetch(url)
-  return response.json()
+  var url = "https://lol-network-api.azurewebsites.net/friend/"+userName;
+  try {
+    response = await fetch(url)
+    return response.json()
+  } catch(error) {
+    console.log(error)
+    return error;
+  }
 }
 
 async function drawDepth2Node(userName, userNameList, i) {
   var friendName = userNameList[i];
   let userInfo = await fetchUserFreind(friendName)
   console.log(userInfo);
-  nodes[i]['image'] = userInfo['profileImage'];
+  nodes[i+1]['image'] = userInfo['profileImage'];
       
   friend = userInfo.friend;
   var randomColor = COLOR[Math.floor(Math.random() * COLOR.length)];      
@@ -158,8 +163,8 @@ async function draw(userName) {
     friends.push(nickName);
   }
   drawNetwork(nodes, edges)
-  document.getElementById('loading').style.display = "none";
 
+  document.getElementById('loading').style.display = "none";
   progressBarValue += 100/(friend.length+1);
   console.log(progressBarValue);
   progressBar.style.width = String(progressBarValue)+'%';
