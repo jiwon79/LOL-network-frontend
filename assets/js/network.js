@@ -145,6 +145,11 @@ async function main(userName) {
     alert("해당 소환사의 정보가 없습니다. 닉네임을 다시 확인해주세요.");
   }
 
+  if (inpData instanceof TypeError) {    
+    alert("서버에서 정보를 받아오지 못했습니다. 새로고침 해주세요.");
+    return undefined;
+  }
+
   friendNameList = [];
   friend = inpData.friend;
   nodeName = [userName];
