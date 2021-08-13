@@ -11,6 +11,7 @@ ul, li {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: sans-serif;
   text-align: left;
   padding: 0 1rem;
   padding: 3rem 0;
@@ -24,8 +25,7 @@ ul, li {
 }
 
 h1 {
-  font-size: 1.1rem;
-  font-family: sans-serif;
+  font-size: 1.2rem;
 }
 
 .sessions {
@@ -61,34 +61,20 @@ li:before {
   top: 0px;
 }
 
-.time {
+.log__time {
   color: #2a2839;
-  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
   font-weight: 500;
 }
 
-@media screen and (min-width: 601px) {
-  .time {
-    font-size: 0.9rem;
- }
-}
-
-@media screen and (max-width: 600px) {
-  .time {
-    margin-bottom: 0.3rem;
-    font-size: 0.85rem;
- }
-}
-
-li p {
+.log__title {
   color: #4f4f4f;
-  font-family: sans-serif;
-  line-height: 1.5;
+  font-size: 1rem;
+  font-family: 'NEXON Lv1 Gothic OTF';
+  letter-spacing: 1px;
   margin-top: 0.4rem;
 }
 
-@media screen and (max-width: 600px) {
-  p {
-    font-size: 0.9rem;
- }
+.log__content {
+  line-height: 1;
 }
