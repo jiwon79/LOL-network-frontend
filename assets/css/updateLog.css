@@ -34,7 +34,7 @@ h1 {
   position: relative;
 }
 
-li {
+.log {
   padding-bottom: 1.5rem;
   border-left: 1px solid #abaaed;
   position: relative;
@@ -42,12 +42,12 @@ li {
   margin-left: 10px;
 }
 
-li:last-child {
+.log:last-child {
   border: 0px;
   padding-bottom: 0;
 }
 
-li:before {
+.log:before {
   content: '';
   width: 15px;
   height: 15px;

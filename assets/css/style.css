@@ -54,18 +54,28 @@ body {
 #footer {
   background-color: #a79c8e;
   margin: 10px 0 0 0;
-  padding: 10px 0 10px 0;
 }
 
-#footer p {
-  margin: 5px 0 0 0;
-  letter-spacing: 1px;
-  color: #f4f5f9;
+.footer__menu {
+  padding: 20px 0 20px 30px;
+  text-align: left;
+  border-bottom: 1px solid #fff;
 }
 
 #footer a {
   color: #f4f5f9;
 }
+
+.footer__content {
+  padding: 20px 0 20px 0;
+}
+
+.footer__content p {
+  margin: 5px 0 0 0;
+  letter-spacing: 1px;
+  color: #f4f5f9;
+}
+
 @media screen and (max-width:728px) {
   .ad_kakao:nth-child(2) {
     display: none;
