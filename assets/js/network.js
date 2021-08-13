@@ -14,7 +14,8 @@ const COLOR = ["#FC9EBD", "#FFADC5", "#FFA9B0", "#FFCCCC", "#CCD1FF", "#A8C8F9",
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const userName = urlParams.get('input')
+const userName = urlParams.get('input');
+const depth = urlParams.get('depth');
 
 const progressBar = document.querySelector('.progress-bar');
 var progressBarValue = 1;
@@ -59,16 +60,35 @@ function drawNetwork(nodes, edges) {
 }
 
 async function fetchUserFreind(userName) {
-  var url = "https://lol-network-api-dev.azurewebsites.net/friend/"+userName;
-  response = await fetch(url)
-  return response.json()
+  var url = "https://lol-network-api.azurewebsites.net/friend/"+userName;
+  try {
+    response = await fetch(url)
+    return response.json()
+  } catch(error) {
+    console.log(error)
+    return error;
+  }
+}
+
+function addProgressValue(addValue) {
+  progressBarValue += addValue;
+  progressBar.style.width = String(progressBarValue)+'%';
+  
+  if (progressBarValue > 100) {
+    document.querySelector('.progress').style.display = "none";
+    document.querySelector('.progress-text').style.display = "none";
+  }
 }
 
 async function drawDepth2Node(userName, userNameList, i) {
   var friendName = userNameList[i];
   let userInfo = await fetchUserFreind(friendName)
   console.log(userInfo);
-  nodes[i]['image'] = userInfo['profileImage'];
+  if (userInfo instanceof TypeError) {    
+    addProgressValue(100/(userNameList.length+1));
+    return undefined;
+  }
+  nodes[i+1]['image'] = userInfo['profileImage'];
       
   friend = userInfo.friend;
   var randomColor = COLOR[Math.floor(Math.random() * COLOR.length)];      
@@ -110,20 +130,12 @@ async function drawDepth2Node(userName, userNameList, i) {
     nodes[j]["value"] *= Math.log(nodeName.length)/2;
   }
 
-  progressBarValue += 100/(userNameList.length+1);
-  console.log(progressBarValue);
-  progressBar.style.width = String(progressBarValue)+'%';
-  
-  if (progressBarValue > 100) {
-    document.querySelector('.progress').style.display = "none";
-    document.querySelector('.progress-text').style.display = "none";
-  }
-  
+  addProgressValue(100/(userNameList.length+1));
   drawNetwork(nodes, edges)
 }
 
 
-async function draw(userName) {
+async function main(userName) {
   var inpData = await fetchUserFreind(userName);
 
   if (inpData["result"] == "no-summoner") {
@@ -158,17 +170,16 @@ async function draw(userName) {
     friends.push(nickName);
   }
   drawNetwork(nodes, edges)
-  document.getElementById('loading').style.display = "none";
 
+  document.getElementById('loading').style.display = "none";
   progressBarValue += 100/(friend.length+1);
   console.log(progressBarValue);
   progressBar.style.width = String(progressBarValue)+'%';
     
   console.log(friends);
   for (var i=0; i<friends.length; i++) {
-
     drawDepth2Node(userName, friends, i)
   }
 }
 
-draw(userName);
+main(userName);
