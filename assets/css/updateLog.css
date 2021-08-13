@@ -13,7 +13,6 @@ ul, li {
   align-items: center;
   text-align: left;
   padding: 0 1rem;
-  background: linear-gradient(45deg, #209cff, #68e0cf);
   padding: 3rem 0;
 }
 
@@ -80,7 +79,7 @@ li:before {
  }
 }
 
-p {
+li p {
   color: #4f4f4f;
   font-family: sans-serif;
   line-height: 1.5;
