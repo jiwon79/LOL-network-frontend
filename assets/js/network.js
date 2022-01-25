@@ -60,7 +60,7 @@ function drawNetwork(nodes, edges) {
 }
 
 async function fetchUserFreind(userName) {
-  var url = "https://lol-network-api.azurewebsites.net/friend/"+userName;
+  var url = "https://lol-network.herokuapp.com/friend/"+userName;
   try {
     response = await fetch(url)
     return response.json()
