@@ -101,12 +101,12 @@ async function drawDepth2Node(userName, friendNameList, i) {
         if (count == DEPTH_LIMIT_2) {
             break;
         }
-        var nickName = Object.keys(friend[j])[0];
+        var nickName = friend[j].username;
         if (!nodeName.includes(nickName) && userName.replaceAll(' ', '') != nickName.replaceAll(' ', '')) {
             count += 1;
             nodes.push({
                 id: nickName,
-                value: Math.log(friend[j][nickName]),
+                value: Math.log(friend[j].weight),
                 label: nickName,
             });
             nodeName.push(nickName);
@@ -119,7 +119,7 @@ async function drawDepth2Node(userName, friendNameList, i) {
             edges.push({
                 from: friendName,
                 to: nickName,
-                value: Math.log(friend[j][nickName]),
+                value: Math.log(friend[j].weight),
                 color: randomColor,
             });
         }
@@ -162,17 +162,18 @@ async function main(userName) {
     edges = [];
 
     for (var i = 0; i < Math.min(friend.length, DEPTH_LIMIT_1); i++) {
-        var nickName = Object.keys(friend[i])[0];
+        var nickName = friend[i].username;
+        // var nickName = Object.keys(friend[i])[0];
         nodes.push({
             id: nickName,
-            value: Math.log(friend[i][nickName]) * 3,
+            value: Math.log(friend[i].weight) * 3,
             label: nickName,
         });
         nodeName.push(nickName);
         edges.push({
             from: userName,
             to: nickName,
-            value: Math.log(friend[i][nickName]) * 1.5,
+            value: Math.log(friend[i].weight) * 1.5,
         });
         friendNameList.push(nickName);
     }
