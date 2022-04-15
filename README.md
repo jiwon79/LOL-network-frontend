@@ -1,4 +1,5 @@
 # LOL-network-frontend
+같이 롤을 플레이한 친구를 network로 보여줍니다.
 
 ## Introduction
 ### Project Schedule
@@ -12,3 +13,7 @@
 2. Vanilla JS(vis-network)
 3. Netlify
 
+## Function
+1. 메인 페이지에서 롤 닉네임을 입력하면 찾이 롤을 플레이한 친구의 network를 보여줍니다.
+2. 노드를 클릭해서 이동하면 물리엔진에 의해 움직입니다.(vis-network library)
+3. remake 버튼을 클릭하면 network를 랜덤하게 새로 만들어줍니다.
